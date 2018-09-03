@@ -38,9 +38,13 @@ def get_page_index(offset, keyword):
 
 
 def download_image(url):
+    # 添加headers信息，否则可能request.get(url)的内容为空，与时间的页面查看源码不一致
+    headers = {
+        'User-Agent': "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36"
+    }
     print('Downloading', url)
     try:
-        response = requests.get(url)
+        response = requests.get(url, headers = headers)
         if response.status_code == 200:
             save_image(response.content)
         return None
